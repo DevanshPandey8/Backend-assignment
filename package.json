@@ -1,0 +1,28 @@
+{
+  "name": "global-class-booking-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend service for a global live-learning platform offering booking workflow.",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "test": "npm run test:integration",
+    "test:integration": "node --import tsx --test tests/booking-race.test.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "dotenv": "^16.6.1",
+    "luxon": "^3.6.1",
+    "pg": "^8.16.3",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.0.14",
+    "@types/pg": "^8.20.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2"
+  }
+}

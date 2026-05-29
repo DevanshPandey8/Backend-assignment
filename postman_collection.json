@@ -1,0 +1,60 @@
+{
+  "info": {
+    "name": "Global Class Booking System - Minimal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "3000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Create Offering",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"courseName\": \"Math\",\n  \"title\": \"Algebra 101\",\n  \"teacherId\": \"teacher-1\",\n  \"teacherTimezone\": \"America/Los_Angeles\"\n}"
+        },
+        "url": { "raw": "http://localhost:3000/teachers/offerings", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["teachers","offerings"] }
+      }
+    },
+    {
+      "name": "Add Sessions",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"sessions\": [{ \"startAt\": \"2026-06-10T10:00:00\", \"endAt\": \"2026-06-10T11:00:00\" }]\n}" },
+        "url": { "raw": "http://localhost:3000/teachers/{offeringId}/sessions", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["teachers","{offeringId}","sessions"] }
+      }
+    },
+    {
+      "name": "List Offerings",
+      "request": { "method": "GET", "url": { "raw": "http://localhost:3000/offerings?timezone=America/Los_Angeles", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["offerings"], "query": [{ "key": "timezone", "value": "America/Los_Angeles" }] } }
+    },
+    {
+      "name": "Book Offering",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"offeringId\": \"<offering-id>\" }" },
+        "url": { "raw": "http://localhost:3000/parents/{parentId}/bookings", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["parents","{parentId}","bookings"] }
+      }
+    },
+    {
+      "name": "List Parent Bookings",
+      "request": { "method": "GET", "url": { "raw": "http://localhost:3000/parents/{parentId}/bookings?timezone=America/Los_Angeles", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["parents","{parentId}","bookings"], "query": [{ "key": "timezone", "value": "America/Los_Angeles" }] } }
+    }
+  ]
+}

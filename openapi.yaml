@@ -1,0 +1,142 @@
+openapi: 3.1.0
+info:
+  title: Global Class Booking System
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /health:
+    get:
+      responses:
+        '200':
+          description: Service health
+  /teachers/offerings:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOfferingRequest'
+      responses:
+        '201':
+          description: Offering created
+  /teachers/offerings/{offeringId}/sessions:
+    post:
+      parameters:
+        - in: path
+          name: offeringId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSessionsRequest'
+      responses:
+        '201':
+          description: Sessions created
+  /teachers/{teacherId}/offerings:
+    get:
+      parameters:
+        - in: path
+          name: teacherId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: timezone
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Teacher offerings
+  /offerings:
+    get:
+      parameters:
+        - in: query
+          name: timezone
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: parentId
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Available offerings
+  /parents/{parentId}/bookings:
+    post:
+      parameters:
+        - in: path
+          name: parentId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookOfferingRequest'
+      responses:
+        '201':
+          description: Booking created
+    get:
+      parameters:
+        - in: path
+          name: parentId
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: timezone
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Parent bookings
+components:
+  schemas:
+    CreateOfferingRequest:
+      type: object
+      required: [courseName, title, teacherId, teacherTimezone]
+      properties:
+        courseName:
+          type: string
+        title:
+          type: string
+        teacherId:
+          type: string
+        teacherTimezone:
+          type: string
+    CreateSessionsRequest:
+      type: object
+      required: [sessions]
+      properties:
+        sessions:
+          type: array
+          items:
+            type: object
+            required: [startAt, endAt]
+            properties:
+              startAt:
+                type: string
+                description: ISO 8601 datetime in the teacher timezone
+              endAt:
+                type: string
+                description: ISO 8601 datetime in the teacher timezone
+    BookOfferingRequest:
+      type: object
+      required: [offeringId]
+      properties:
+        offeringId:
+          type: string
+          format: uuid
